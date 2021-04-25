@@ -12,23 +12,29 @@ using namespace std;
 class Node
 {
 public:
-    unsigned char token = 0;
-    int freq = 0;
-    Node* left = nullptr, * rigth = nullptr;
+    unsigned char token;
+    int freq;
+    Node* left, * rigth;
 
     Node()
     {
-
+        token = 0;
+        freq = 0;
+        left = nullptr;
+        rigth = nullptr;
     }
 
     Node(unsigned char _token, int _freq)
     {
         token = _token;
         freq = _freq;
+        left = nullptr;
+        rigth = nullptr;
     }
 
     Node(Node* _left, Node* _rigth)
     {
+        token = 0;
         freq = _left->freq + _rigth->freq;
         left = _left;
         rigth = _rigth;
@@ -39,6 +45,7 @@ public:
 
     }
 };
+
 
 //the left - recursive function of traversing the tree and building to the leaves of their codes
 void TreeGo(Node* head, vector<bool>code, map<char, vector<bool>>* list_code)
@@ -89,12 +96,11 @@ int main()
     }
 
     //reading the characters themselves and the frequency of that character and writing them to a list
-    unsigned char symbol, trash;
+    unsigned char symbol;
     list<Node*>freq_list;
     for (size_t i = 0; i < n; i++)
     {
         symbol = fin.get();
-        trash = fin.get();
         {
             string t;
             unsigned char c;
@@ -122,9 +128,7 @@ int main()
         Node* r = freq_list.front();
         freq_list.pop_front();
 
-        Node* new_node = new Node(0, l->freq + r->freq);
-        new_node->left = l;
-        new_node->rigth = r;
+        Node* new_node = new Node(l,r);
 
         auto iter = freq_list.begin();
 
