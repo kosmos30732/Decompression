@@ -164,14 +164,8 @@ int main()
     vector <bool> temp;
 
     //reading the next character from a compressed file and expanding them into text
-    while (true)
+    while (((c = fin.get())|| c==0) && !fin.eof())
     {
-        c = fin.get();
-        if (fin.eof())
-        {
-            break;
-        }
-
         //it is necessary to check the last byte, whether the file has ended
         auto end_of_file = fin.peek();
         for (size_t i = 0; i < 8; i++)
