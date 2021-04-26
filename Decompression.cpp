@@ -74,47 +74,23 @@ void TreeGo(Node* head, vector<bool>code, map<char, vector<bool>>* list_code)
 int main()
 {
     ifstream fin("output.txt", ios::binary);
-    int n, symbol_freq = 0;
 
     //reading the first number, how many bits are occupied in the last byte
-    unsigned char count = fin.get();
+    int count;
+    fin.read((char*)&count, sizeof(count));
 
     //reading the number how many characters will we have is in the map
-    {
-        string t;
-        unsigned char c = fin.get();
-        while (true)
-        {
-            c = fin.get();
-            if (c == ' ')
-            {
-                break;
-            }
-            t += c;
-        }
-        n = stoi(t);
-    }
+    int n;
+    fin.read((char*)&n, sizeof(n));
 
     //reading the characters themselves and the frequency of that character and writing them to a list
     unsigned char symbol;
+    int symbol_freq;
     list<Node*>freq_list;
     for (size_t i = 0; i < n; i++)
     {
-        symbol = fin.get();
-        {
-            string t;
-            unsigned char c;
-            while (true)
-            {
-                c = fin.get();
-                if (c == ' ')
-                {
-                    break;
-                }
-                t += c;
-            }
-            symbol_freq = stoi(t);
-        }
+        fin.read((char*)&symbol, sizeof(symbol));
+        fin.read((char*)&symbol_freq, sizeof(symbol_freq));
 
         Node* temp = new Node(symbol, symbol_freq);
         freq_list.push_back(temp);
@@ -190,7 +166,7 @@ int main()
             fout << iter->second;
 
             //for the last byte, check that we have reached the end and written all the significant bits in the last byte
-            if (end_of_file == EOF && i + 1 == count - '0')
+            if (end_of_file == EOF && i + 1 == count)
             {
                 break;
             }
